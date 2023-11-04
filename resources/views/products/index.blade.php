@@ -1,9 +1,15 @@
 <table>
     <tbody>
-        @foreach ($products as $product)
+        @forelse ($products as $product)
             <tr>
                 <td>{{ $product->name }}</td>
             </tr>
-        @endforeach
+            @empty
+            <tr>
+                <td>
+                    No hay productos registrados
+                </td>
+            </tr>
+        @endforelse
     </tbody>
 </table>

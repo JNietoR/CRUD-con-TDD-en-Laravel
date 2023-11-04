@@ -20,4 +20,12 @@ class IndexTest extends TestCase
 
         
     }
+    public function test_empty()
+    {
+        $this
+        ->get(route('products.index'))
+        ->assertStatus(200)
+        ->assertSee('No hay productos registrados');
+
+    }
 }
