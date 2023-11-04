@@ -5,16 +5,18 @@ namespace Tests\Feature\Http\Controllers\ProductController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Product;
 
 class ShowTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
+    use RefreshDatabase;
 
-        $response->assertStatus(200);
+    public function test_product_detail()
+    {
+        $product = Product::factory()->create();
+
+        $this->get(route('products.show', $product))
+            ->assertStatus(200)
+            ->assertSee($product->name);
     }
 }
