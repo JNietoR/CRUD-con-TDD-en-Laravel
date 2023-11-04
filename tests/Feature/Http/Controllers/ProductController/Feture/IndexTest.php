@@ -12,9 +12,7 @@ class IndexTest extends TestCase
     use RefreshDatabase;
     public function test_list()
     {
-        $product = Product::factory()->create([
-            'name'=> 'Martillo'
-        ]);
+        $product = Product::factory()->create();
 
         $this->get(route('products.index'))
         ->assertStatus(200)
