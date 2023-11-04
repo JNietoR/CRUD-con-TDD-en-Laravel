@@ -10,7 +10,7 @@ use App\Models\Product;
 class IndexTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_example()
+    public function test_index()
     {
         $product = Product::factory()->create();
 
