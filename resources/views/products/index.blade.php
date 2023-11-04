@@ -13,3 +13,5 @@
         @endforelse
     </tbody>
 </table>
+
+{{ $products->links() }}

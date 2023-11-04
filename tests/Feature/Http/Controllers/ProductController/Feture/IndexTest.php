@@ -20,6 +20,7 @@ class IndexTest extends TestCase
 
         
     }
+
     public function test_empty()
     {
         $this
@@ -28,4 +29,24 @@ class IndexTest extends TestCase
         ->assertSee('No hay productos registrados');
 
     }
+
+    public function test_paginate()
+    {
+            $first = Product::factory()->create();
+            $products = Product::factory()->count(9)->create();
+            $last= Product::factory()->create();
+
+        $this
+        ->get(route('products.index'))
+        ->assertStatus(200)
+        ->assertSee($last->name);
+
+        $this
+        ->get(route('products.index', ['page' => 2]))
+        ->assertStatus(200)
+        ->assertSee($first->name)
+        ->assertSee(route('products.index', ['page' => 1]));
+
+    }
+
 }
