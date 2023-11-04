@@ -10,9 +10,11 @@ use App\Models\Product;
 class IndexTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_index()
+    public function test_list()
     {
-        $product = Product::factory()->create();
+        $product = Product::factory()->create([
+            'name'=> 'Martillo'
+        ]);
 
         $this->get(route('products.index'))
         ->assertStatus(200)
