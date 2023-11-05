@@ -6,28 +6,34 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use App\Models\Product;
+
 class EditTest extends TestCase
 {
-    
+    use RefreshDatabase;
+
     public function test_form()
     {
-        //ruta del formulario con los metodos del ProductController products.create para crear y products.store guardar los datos
+        $product = Product::factory()->create();
+        
         $this
-        ->get(route('products.create'))
-        ->assertStatus(200)
-        ->assertSee(route('products.store'));
+            ->get(route('products.edit', $product))
+            ->assertStatus(200)
+            ->assertSee($product->name)
+            ->assertSee(route('products.update'), $product);
 
         
     }
 
-    public function test_store()
+    public function test_update()
     {
+        $product = Product::factory()->create();
         //Simulación datos del formulario
-        $data = ['name' => 'Producto de prueba'];
+        $data = ['name' => 'Nuevo nombre'];
        
         //almacenar los datos y reidirigir al index de productos
         $this
-            ->post(route('products.store'), $data)
+            ->put(route('products.update', $product), $data)
             ->assertRedirect(route('products.index'));
             
         //comprobar que se han introducido los datos correctamente en la base de datos
@@ -38,12 +44,13 @@ class EditTest extends TestCase
 
     public function test_validate()
     {
+        $product = Product::factory()->create();
         //Cuando el valor name de la tabla este vacio
-        $data = ['name' => ''];
+        $data = ['name' => null];
        
         //almacenar los datos y reidirigir al index de productos
         $this
-            ->post(route('products.store'), $data)
+            ->post(route('products.update', $product), $data)
             ->assertSessionHasErrors('name')
             ->assertStatus(302);
             
