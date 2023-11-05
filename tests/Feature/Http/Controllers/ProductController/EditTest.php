@@ -20,7 +20,7 @@ class EditTest extends TestCase
             ->get(route('products.edit', $product))
             ->assertStatus(200)
             ->assertSee($product->name)
-            ->assertSee(route('products.update'), $product);
+            ->assertSee(route('products.update', $product));
 
         
     }
@@ -50,7 +50,7 @@ class EditTest extends TestCase
        
         //almacenar los datos y reidirigir al index de productos
         $this
-            ->post(route('products.update', $product), $data)
+            ->put(route('products.update', $product), $data)
             ->assertSessionHasErrors('name')
             ->assertStatus(302);
             
