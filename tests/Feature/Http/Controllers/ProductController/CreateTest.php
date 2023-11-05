@@ -12,9 +12,26 @@ class CreateTest extends TestCase
     public function test_form()
     {
         //ruta del formulario con los metodos del ProductController products.create para crear y products.store guardar los datos
-        $this->get(route('products.create'))
+        $this
+        ->get(route('products.create'))
         ->assertStatus(200)
-        ->assertStatus(route('products.store'));
+        ->assertSee(route('products.store'));
+
+        
+    }
+
+    public function test_store()
+    {
+        //Simulación datos del formulario
+        $data = ['name' => 'Producto de prueba'];
+       
+        //almacenar los datos y reidirigir al index de productos
+        $this
+            ->post(route('products.store'), $data)
+            ->assertRedirect(route('products.index'));
+            
+        //comprobar que se han introducido los datos correctamente en la base de datos
+        $this->assertDatabaseHas('products', $data);
 
         
     }
