@@ -16,7 +16,12 @@ class IndexTest extends TestCase
 
         $this->get(route('products.index'))
         ->assertStatus(200)
-        ->assertSee($product->name);
+        ->assertSee($product->name)
+        ->assertSee(route('products.create'))
+        ->assertSee(route('products.show', $product))
+        ->assertSee(route('products.edit', $product))
+        ->assertSee(route('products.destroy', $product))
+        ;
 
         
     }
