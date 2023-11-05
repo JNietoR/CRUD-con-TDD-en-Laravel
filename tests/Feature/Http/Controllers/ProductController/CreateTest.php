@@ -35,4 +35,18 @@ class CreateTest extends TestCase
 
         
     }
+
+    public function test_validate()
+    {
+        //Cuando el valor name de la tabla este vacio
+        $data = ['name' => ''];
+       
+        //almacenar los datos y reidirigir al index de productos
+        $this
+            ->post(route('products.store'), $data)
+            ->assertSessionHasErrors('name')
+            ->assertStatus(302);
+            
+        
+    }
 }
