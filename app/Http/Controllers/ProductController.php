@@ -36,5 +36,20 @@ class ProductController extends Controller
 
         return redirect()->route('products.index');
     }
+
+    public function edit(Product $product)
+    {
+        return view('products.edit',[
+            'product' => $product
+        ]);
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate(['name' => 'required']);
+        $product->update($request->all());
+
+        return redirect()->route('products.index');
+    }
     
 }
